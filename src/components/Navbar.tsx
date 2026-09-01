@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Menu, X, ArrowUpRight, LogIn, LogOut } from 'lucide-react';
+import { Menu, X, ArrowUpRight } from 'lucide-react';
 import { STUDIO_INFO } from '../data/studioData';
-import { useAuth } from '../hooks/useAuth';
 
 interface NavbarProps {
   onOpenBooking: () => void;
@@ -12,7 +11,6 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
-  const { user, login, logout, loading } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -125,26 +123,6 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
               <span className="w-1.5 h-1.5 rounded-full bg-[#C2652B] animate-pulse" />
               <span>2 Sprint Slots Open</span>
             </div>
-            
-            {!loading && user ? (
-              <button
-                onClick={logout}
-                className="hidden md:inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full border border-[#D1C6B4] text-[#685D52] hover:bg-[#F3EFE9] transition-colors"
-                title="Sign out"
-              >
-                <img src={user.photoURL || ''} alt={user.displayName || 'User'} className="w-4 h-4 rounded-full" />
-                <span className="hidden lg:inline">Sign Out</span>
-                <LogOut className="w-3 h-3 lg:hidden" />
-              </button>
-            ) : !loading && !user ? (
-              <button
-                onClick={login}
-                className="hidden md:inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full border border-[#D1C6B4] text-[#685D52] hover:bg-[#F3EFE9] transition-colors"
-              >
-                <LogIn className="w-3.5 h-3.5" />
-                <span>Client Login</span>
-              </button>
-            ) : null}
 
             <button
               onClick={onOpenBooking}
@@ -200,23 +178,6 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
                 </a>
               ))}
               <div className="pt-3 border-t border-[#EAE3D7] mt-2 flex flex-col gap-2">
-                {!loading && user ? (
-                  <button
-                    onClick={logout}
-                    className="w-full py-2.5 text-center text-sm font-semibold rounded-xl border border-[#D1C6B4] text-[#685D52] hover:bg-[#F3EFE9] transition-colors flex items-center justify-center gap-2"
-                  >
-                    <LogOut className="w-4 h-4" />
-                    <span>Sign Out</span>
-                  </button>
-                ) : !loading && !user ? (
-                  <button
-                    onClick={login}
-                    className="w-full py-2.5 text-center text-sm font-semibold rounded-xl border border-[#D1C6B4] text-[#685D52] hover:bg-[#F3EFE9] transition-colors flex items-center justify-center gap-2"
-                  >
-                    <LogIn className="w-4 h-4" />
-                    <span>Client Login</span>
-                  </button>
-                ) : null}
                 <button
                   onClick={() => {
                     setMobileMenuOpen(false);

@@ -1,8 +1,7 @@
 import { useState, useEffect, type FormEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Sparkles, Check, ArrowRight, Calendar, MessageSquare, Mail, CheckCircle2, LogIn } from 'lucide-react';
+import { X, Sparkles, Check, ArrowRight, Calendar, MessageSquare, Mail, CheckCircle2 } from 'lucide-react';
 import { STUDIO_INFO } from '../data/studioData';
-import { useAuth } from '../hooks/useAuth';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 
@@ -15,12 +14,12 @@ interface BookingModalProps {
 export default function BookingModal({ isOpen, onClose, initialService }: BookingModalProps) {
   const [serviceType, setServiceType] = useState<string>('growth-combo');
   const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [brief, setBrief] = useState('');
   const [budget, setBudget] = useState('Growth Combo (₹45,000 setup + ₹28,000/mo)');
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { user, login } = useAuth();
 
   useEffect(() => {
     if (initialService) {
@@ -61,14 +60,12 @@ export default function BookingModal({ isOpen, onClose, initialService }: Bookin
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!user) return;
     
     setIsSubmitting(true);
     try {
       await addDoc(collection(db, 'inquiries'), {
-        userId: user.uid,
-        userEmail: user.email,
-        name: name || user.displayName || 'Founder',
+        name,
+        userEmail: email,
         phone,
         brief,
         serviceType,
@@ -88,6 +85,7 @@ export default function BookingModal({ isOpen, onClose, initialService }: Bookin
   const handleReset = () => {
     setSubmitted(false);
     setName('');
+    setEmail('');
     setPhone('');
     setBrief('');
     onClose();
@@ -183,18 +181,33 @@ export default function BookingModal({ isOpen, onClose, initialService }: Bookin
                 </div>
 
                 {/* Contact Info */}
-                <div>
-                  <label className="block text-xs font-mono text-[#8B481E] uppercase mb-1 font-semibold">
-                    Your Name
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder={user ? user.displayName || "e.g. Rohan Sharma" : "e.g. Rohan Sharma"}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#D8D0C2] text-[#141F2D] text-xs sm:text-sm placeholder-[#A09383] focus:outline-none focus:border-[#9A5328] focus:ring-1 focus:ring-[#9A5328] transition-all"
-                  />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-mono text-[#8B481E] uppercase mb-1 font-semibold">
+                      Your Name
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="e.g. Rohan Sharma"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#D8D0C2] text-[#141F2D] text-xs sm:text-sm placeholder-[#A09383] focus:outline-none focus:border-[#9A5328] focus:ring-1 focus:ring-[#9A5328] transition-all"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-mono text-[#8B481E] uppercase mb-1 font-semibold">
+                      Work Email
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="founder@company.com"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#D8D0C2] text-[#141F2D] text-xs sm:text-sm placeholder-[#A09383] focus:outline-none focus:border-[#9A5328] focus:ring-1 focus:ring-[#9A5328] transition-all"
+                    />
+                  </div>
                 </div>
 
                 {/* Phone / WhatsApp */}
@@ -245,25 +258,14 @@ export default function BookingModal({ isOpen, onClose, initialService }: Bookin
                 </div>
 
                 <div className="pt-2">
-                  {!user ? (
-                    <button
-                      type="button"
-                      onClick={login}
-                      className="w-full py-3.5 rounded-full bg-white border-2 border-[#141F2D] text-[#141F2D] hover:bg-[#F3EFE9] font-semibold text-sm transition-all flex items-center justify-center gap-2 shadow-sm"
-                    >
-                      <LogIn className="w-4 h-4" />
-                      <span>Sign in with Google to Book</span>
-                    </button>
-                  ) : (
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      id="submit-booking-form-btn"
-                      className="w-full py-3.5 rounded-full bg-[#141F2D] hover:bg-[#1E2E42] text-[#FAF8F5] font-semibold text-sm transition-all flex items-center justify-center gap-2 shadow-card disabled:opacity-70"
-                    >
-                      <span>{isSubmitting ? 'Submitting...' : 'Submit Inquiry & Get Roadmap →'}</span>
-                    </button>
-                  )}
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    id="submit-booking-form-btn"
+                    className="w-full py-3.5 rounded-full bg-[#141F2D] hover:bg-[#1E2E42] text-[#FAF8F5] font-semibold text-sm transition-all flex items-center justify-center gap-2 shadow-card disabled:opacity-70"
+                  >
+                    <span>{isSubmitting ? 'Submitting...' : 'Submit Inquiry & Get Roadmap →'}</span>
+                  </button>
                   <div className="text-center text-[11px] text-[#7A6E60] mt-2 font-mono">
                     Direct partner review · Instant automated lead routing · 4-hour response
                   </div>
@@ -281,7 +283,7 @@ export default function BookingModal({ isOpen, onClose, initialService }: Bookin
                 Request Captured & Routed
               </h4>
               <p className="text-xs sm:text-sm text-[#5E5245] mt-2 max-w-md mx-auto leading-relaxed">
-                Thanks <strong className="text-[#141F2D]">{name || user?.displayName || 'Founder'}</strong>. Your brief for the <strong className="text-[#9A5328] uppercase">{budget}</strong> was instantly captured by our automation pipeline and forwarded to our team. We'll reply directly to <span className="text-[#141F2D] font-medium">{user?.email}</span>.
+                Thanks <strong className="text-[#141F2D]">{name || 'Founder'}</strong>. Your brief for the <strong className="text-[#9A5328] uppercase">{budget}</strong> was instantly captured by our automation pipeline and forwarded to our team. We'll reply directly to <span className="text-[#141F2D] font-medium">{email}</span>.
               </p>
 
               <div className="mt-6 p-4 rounded-2xl bg-white border border-[#E4DCD0] text-left text-xs space-y-2">
