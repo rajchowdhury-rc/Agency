@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@layer base {
+  html {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color-scheme: light;
+    background-color: #FBF9F5;
+    color: #181E26;
+  }
+  
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+  
+  .font-display {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    letter-spacing: -0.03em;
+  }
+
+  .font-serif-display {
+    font-family: 'Newsreader', 'Instrument Serif', Georgia, serif;
+  }
+}
+
+/* Premium Atelier Palette Utilities */
+/* Base Canvas: #FBF9F5 (Warm Sand/Linen), Card Canvas: #FFFFFF & #F6F3EC */
+/* Off-Color 1 (Warm Cognac / Burnt Amber): #9A5328, #B86734, #F7EFE8 */
+/* Off-Color 2 (Midnight Navy / Slate Ink): #131E2B, #1E2D40, #EDF2F7 */
+/* Warm Stone Borders: #E5DFD5, #D8D0C2 */
+
+.shadow-subtle {
+  box-shadow: 0 1px 2px 0 rgba(35, 25, 15, 0.04), 0 1px 3px 0 rgba(35, 25, 15, 0.02);
+}
+
+.shadow-card {
+  box-shadow: 0 4px 20px -2px rgba(30, 25, 20, 0.05), 0 2px 6px -1px rgba(30, 25, 20, 0.02);
+}
+
+.shadow-card-hover {
+  box-shadow: 0 12px 32px -4px rgba(30, 25, 20, 0.08), 0 4px 12px -2px rgba(30, 25, 20, 0.03);
+}
+
+.shadow-elevated {
+  box-shadow: 0 20px 40px -8px rgba(25, 20, 15, 0.09), 0 8px 16px -4px rgba(25, 20, 15, 0.04);
+}
+
+/* Warm architectural background grid */
+.bg-warm-grid {
+  background-image: radial-gradient(rgba(180, 165, 150, 0.28) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.bg-warm-lines {
+  background-image: linear-gradient(to right, rgba(225, 218, 207, 0.55) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(225, 218, 207, 0.55) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* Custom Scrollbar for Warm Atelier Mode */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F4F0E8;
+}
+::-webkit-scrollbar-thumb {
+  background: #D4CCC0;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #B8ADA0;
+}
+
+section {
+  scroll-margin-top: 5rem;
+}
+
+
