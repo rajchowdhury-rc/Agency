@@ -11,7 +11,7 @@ export default function PricingSection({ onSelectPlan }: PricingSectionProps) {
   const [currency, setCurrency] = useState<'INR' | 'USD'>('INR');
 
   return (
-    <section id="pricing" className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 relative bg-[#FBF9F5] border-t border-[#E5DFD5]">
+    <section id="pricing" className="pt-20 sm:pt-28 pb-10 sm:pb-16 px-4 sm:px-6 lg:px-8 relative bg-[#FBF9F5] border-t border-[#E5DFD5]">
       <div className="max-w-6xl mx-auto relative z-10">
         
         {/* Section Header */}
@@ -98,10 +98,10 @@ export default function PricingSection({ onSelectPlan }: PricingSectionProps) {
                   <div
                     key={plan.id}
                     id={`standalone-card-${plan.id}`}
-                    className={`relative rounded-2xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-200 ${
+                    className={`relative rounded-2xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
                       isMvp
                         ? 'bg-white border-2 border-[#9A5328] shadow-card'
-                        : 'bg-white border border-[#E4DCD0] shadow-card'
+                        : 'bg-white border border-[#E4DCD0] shadow-card hover:border-[#C8BCAB]'
                     }`}
                   >
                     {isMvp && (
@@ -212,10 +212,10 @@ export default function PricingSection({ onSelectPlan }: PricingSectionProps) {
                   <div
                     key={pkg.id}
                     id={`combo-card-${pkg.id}`}
-                    className={`relative rounded-2xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-200 ${
+                    className={`relative rounded-2xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
                       isPopular
                         ? 'bg-white border-2 border-[#9A5328] shadow-card'
-                        : 'bg-white border border-[#E4DCD0] shadow-card'
+                        : 'bg-white border border-[#E4DCD0] shadow-card hover:border-[#C8BCAB]'
                     }`}
                   >
                     {/* Hero Badge */}

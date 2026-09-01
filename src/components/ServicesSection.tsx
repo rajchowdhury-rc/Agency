@@ -26,7 +26,7 @@ export default function ServicesSection({ onSelectService }: ServicesSectionProp
     : SERVICE_PILLARS.filter((p) => p.id === activeTab);
 
   return (
-    <section id="services" className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 relative bg-[#FBF9F5] border-t border-[#E5DFD5]">
+    <section id="services" className="pt-10 sm:pt-16 pb-20 sm:pb-28 px-4 sm:px-6 lg:px-8 relative bg-[#FBF9F5] border-t border-[#E5DFD5]">
       <div className="max-w-6xl mx-auto">
         
         {/* Section Header */}
@@ -99,7 +99,7 @@ export default function ServicesSection({ onSelectService }: ServicesSectionProp
               <div
                 key={pillar.id}
                 id={`service-card-${pillar.id}`}
-                className={`rounded-2xl p-6 sm:p-7 bg-white border flex flex-col justify-between transition-all duration-200 shadow-card ${
+                className={`rounded-2xl p-6 sm:p-7 bg-white border flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
                   isDifferentiator
                     ? 'border-[#C8BCAB] ring-1 ring-[#E2D8CA]'
                     : 'border-[#E4DCD0] hover:border-[#CCC1B0]'
