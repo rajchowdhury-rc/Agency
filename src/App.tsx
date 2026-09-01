@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import StatsSection from './components/StatsSection';
 import ServicesSection from './components/ServicesSection';
+import PortfolioSection from './components/PortfolioSection';
 import ProcessSection from './components/ProcessSection';
 import PricingSection from './components/PricingSection';
 import FAQSection from './components/FAQSection';
@@ -27,9 +29,11 @@ export default function App() {
       {/* Main Streamlined Experience */}
       <main>
         <Hero onOpenBooking={() => handleOpenBooking('Growth Combo')} />
-        <ServicesSection onSelectService={(svc) => handleOpenBooking(svc)} />
+        <StatsSection />
+        <PortfolioSection />
         <ProcessSection />
         <PricingSection onSelectPlan={(planId) => handleOpenBooking(planId)} />
+        <ServicesSection onSelectService={(svc) => handleOpenBooking(svc)} />
         <FAQSection />
         <FinalCTA onOpenBooking={() => handleOpenBooking('Growth Combo')} />
       </main>

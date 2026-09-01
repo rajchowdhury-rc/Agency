@@ -1,4 +1,4 @@
-import { ProcessStep, PricingPlan, ComboPackage, ServicePillar, FAQItem } from '../types';
+import { ProcessStep, PricingPlan, ComboPackage, ServicePillar, FAQItem, Project } from '../types';
 
 export const STUDIO_INFO = {
   name: 'Kinetic',
@@ -69,6 +69,8 @@ export const COMBO_PACKAGES: ComboPackage[] = [
     tagline: 'Website + Basic Social + 1 Lead Capture Automation',
     setupFeeInr: '₹28,000',
     setupFeeUsd: '$420',
+    originalSetupFeeInr: '₹65,000',
+    originalSetupFeeUsd: '$899',
     retainerInr: '₹12,500',
     retainerUsd: '$190',
     popular: false,
@@ -97,6 +99,8 @@ export const COMBO_PACKAGES: ComboPackage[] = [
     tagline: 'Custom Website + Growth Social + 3 Automation Flows + Reports',
     setupFeeInr: '₹45,000',
     setupFeeUsd: '$680',
+    originalSetupFeeInr: '₹95,000',
+    originalSetupFeeUsd: '$1,299',
     retainerInr: '₹28,000',
     retainerUsd: '$420',
     popular: true,
@@ -129,6 +133,8 @@ export const COMBO_PACKAGES: ComboPackage[] = [
     tagline: 'Custom Full-Stack Web App + Full Social + Paid Ads + Full Automation Suite',
     setupFeeInr: '₹75,000+',
     setupFeeUsd: '$1,150+',
+    originalSetupFeeInr: '₹1,85,000+',
+    originalSetupFeeUsd: '$2,499+',
     retainerInr: '₹48,000+',
     retainerUsd: '$750+',
     popular: false,
@@ -163,6 +169,8 @@ export const STANDALONE_SPRINTS: PricingPlan[] = [
     type: 'Design + Framer / Next.js Build',
     priceInr: '₹35,000',
     priceUsd: '$520',
+    originalPriceInr: '₹85,000',
+    originalPriceUsd: '$1,299',
     period: 'one-time',
     description: 'For startups and businesses looking for a world-class, high-converting digital storefront with zero monthly commitments.',
     timeline: '7 – 10 Days Delivery',
@@ -184,6 +192,8 @@ export const STANDALONE_SPRINTS: PricingPlan[] = [
     type: '21-Day Product Sprint',
     priceInr: '₹1,25,000',
     priceUsd: '$1,650',
+    originalPriceInr: '₹3,50,000',
+    originalPriceUsd: '$4,999',
     period: 'one-time',
     description: 'Full-stack software development for founders who want to validate their SaaS or web application with real users.',
     timeline: '21 Days Delivery',
@@ -266,4 +276,49 @@ export const FAQS: FAQItem[] = [
     question: 'Can I choose only website development or custom software?',
     answer: 'Yes! If you only need a standalone website or a full-stack Next.js MVP without monthly social media management, you can select our Standalone Sprint options in the pricing section.',
   },
+];
+
+export const PORTFOLIO_PROJECTS: Project[] = [
+  {
+    id: 'proj-1',
+    name: 'NexusAI',
+    category: 'AI Systems',
+    tagline: 'AI-Powered Support Desk',
+    description: 'An intelligent customer support routing system processing 10k+ tickets monthly with 92% automated resolution.',
+    deliverable: 'Web App & Automation Pipeline',
+    timeline: '18 Days',
+    techTags: ['Next.js', 'OpenAI', 'Supabase', 'Tailwind'],
+    features: ['Real-time context window', 'Sentiment analysis routing', 'Custom dashboard'],
+    metrics: ['92% Deflection', '3x Faster CSAT'],
+    accentColor: '#9A5328',
+    theme: 'ai'
+  },
+  {
+    id: 'proj-2',
+    name: 'Lumina',
+    category: 'B2B SaaS',
+    tagline: 'HR Management Platform',
+    description: 'A modern human resources dashboard combining payroll, onboarding, and performance tracking into one clean interface.',
+    deliverable: 'Full-Stack MVP',
+    timeline: '21 Days',
+    techTags: ['Next.js', 'PostgreSQL', 'Stripe', 'Framer Motion'],
+    features: ['RBAC Permissions', 'Automated Payroll', 'Dynamic Org Charts'],
+    metrics: ['40% Faster Onboarding', '0% Payroll Errors'],
+    accentColor: '#141F2D',
+    theme: 'saas'
+  },
+  {
+    id: 'proj-3',
+    name: 'Aura Market',
+    category: 'Marketplace',
+    tagline: 'Curated Artisan Marketplace',
+    description: 'A two-sided marketplace connecting independent artisans with design-conscious buyers, featuring seamless checkout.',
+    deliverable: 'Web App & Payment Flow',
+    timeline: '24 Days',
+    techTags: ['Next.js', 'Stripe Connect', 'Prisma', 'Tailwind'],
+    features: ['Split Payments', 'Vendor Dashboards', 'Algorithmic Sorting'],
+    metrics: ['$2M+ GMV Processed', '15k Active Users'],
+    accentColor: '#C2652B',
+    theme: 'marketplace'
+  }
 ];

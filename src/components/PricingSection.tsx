@@ -90,7 +90,8 @@ export default function PricingSection({ onSelectPlan }: PricingSectionProps) {
           <div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto items-stretch">
               {STANDALONE_SPRINTS.map((plan) => {
-                const price不易 = currency === 'INR' ? plan.priceInr : plan.priceUsd;
+                const currentPrice = currency === 'INR' ? plan.priceInr : plan.priceUsd;
+                const originalPrice = currency === 'INR' ? plan.originalPriceInr : plan.originalPriceUsd;
                 const isMvp = plan.id === 'mvp-standalone';
 
                 return (
@@ -131,15 +132,22 @@ export default function PricingSection({ onSelectPlan }: PricingSectionProps) {
 
                       {/* Price Block */}
                       <div className="p-4 rounded-xl bg-[#FAF7F2] border border-[#EAE3D7] mb-5">
-                        <div className="flex items-baseline gap-2">
-                          <span className="text-3xl font-bold text-[#141F2D] font-display tracking-tight">
-                            {price不易}
-                          </span>
-                          <span className="text-xs text-[#7A6E60] font-mono">
-                            / {plan.period}
-                          </span>
+                        <div className="flex flex-col gap-0.5 mb-1">
+                          {originalPrice && (
+                            <span className="text-sm font-semibold text-[#A09383] line-through font-display">
+                              {originalPrice}
+                            </span>
+                          )}
+                          <div className="flex items-baseline gap-2">
+                            <span className="text-3xl font-bold text-[#141F2D] font-display tracking-tight">
+                              {currentPrice}
+                            </span>
+                            <span className="text-xs text-[#7A6E60] font-mono">
+                              / {plan.period}
+                            </span>
+                          </div>
                         </div>
-                        <div className="text-[11px] text-[#8B481E] font-mono mt-1.5 flex items-center gap-1.5 font-medium">
+                        <div className="text-[11px] text-[#8B481E] font-mono mt-2 flex items-center gap-1.5 font-medium">
                           <ShieldCheck className="w-3.5 h-3.5 text-[#9A5328]" />
                           <span>100% Code &amp; Asset Transfer Guarantee</span>
                         </div>
@@ -197,6 +205,7 @@ export default function PricingSection({ onSelectPlan }: PricingSectionProps) {
               {COMBO_PACKAGES.map((pkg) => {
                 const isPopular = pkg.popular;
                 const setupFee = currency === 'INR' ? pkg.setupFeeInr : pkg.setupFeeUsd;
+                const originalSetupFee = currency === 'INR' ? pkg.originalSetupFeeInr : pkg.originalSetupFeeUsd;
                 const retainerFee = currency === 'INR' ? pkg.retainerInr : pkg.retainerUsd;
 
                 return (
@@ -249,8 +258,15 @@ export default function PricingSection({ onSelectPlan }: PricingSectionProps) {
                             <div className="text-[10px] font-mono uppercase text-[#7A6E60] font-semibold">
                               One-Time Setup Fee
                             </div>
-                            <div className="text-2xl font-bold text-[#141F2D] font-display">
-                              {setupFee}
+                            <div className="flex flex-col gap-0.5 mt-0.5">
+                              {originalSetupFee && (
+                                <span className="text-sm font-semibold text-[#A09383] line-through font-display leading-none">
+                                  {originalSetupFee}
+                                </span>
+                              )}
+                              <div className="text-2xl font-bold text-[#141F2D] font-display leading-none mt-1">
+                                {setupFee}
+                              </div>
                             </div>
                           </div>
                           <span className="text-[10px] font-mono text-[#8B481E] bg-[#F5ECE2] px-2 py-0.5 rounded font-medium">

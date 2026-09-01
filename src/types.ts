@@ -52,6 +52,8 @@ export interface PricingPlan {
   type: string;
   priceInr: string;
   priceUsd: string;
+  originalPriceInr?: string;
+  originalPriceUsd?: string;
   period: string;
   description: string;
   popular?: boolean;
@@ -67,6 +69,8 @@ export interface ComboPackage {
   tagline: string;
   setupFeeInr: string;
   setupFeeUsd: string;
+  originalSetupFeeInr?: string;
+  originalSetupFeeUsd?: string;
   retainerInr: string;
   retainerUsd: string;
   popular?: boolean;
