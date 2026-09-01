@@ -2,8 +2,6 @@ import { useState, useEffect, type FormEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Sparkles, Check, ArrowRight, Calendar, MessageSquare, Mail, CheckCircle2 } from 'lucide-react';
 import { STUDIO_INFO } from '../data/studioData';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { db } from '../lib/firebase';
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -19,7 +17,6 @@ export default function BookingModal({ isOpen, onClose, initialService }: Bookin
   const [brief, setBrief] = useState('');
   const [budget, setBudget] = useState('Growth Combo (₹45,000 setup + ₹28,000/mo)');
   const [submitted, setSubmitted] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (initialService) {
@@ -58,28 +55,9 @@ export default function BookingModal({ isOpen, onClose, initialService }: Bookin
 
   if (!isOpen) return null;
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    
-    setIsSubmitting(true);
-    try {
-      await addDoc(collection(db, 'inquiries'), {
-        name,
-        userEmail: email,
-        phone,
-        brief,
-        serviceType,
-        budget,
-        createdAt: serverTimestamp(),
-        status: 'new'
-      });
-      setSubmitted(true);
-    } catch (error) {
-      console.error('Error submitting inquiry:', error);
-      alert('There was an error submitting your inquiry. Please try again.');
-    } finally {
-      setIsSubmitting(false);
-    }
+    setSubmitted(true);
   };
 
   const handleReset = () => {
@@ -195,6 +173,7 @@ export default function BookingModal({ isOpen, onClose, initialService }: Bookin
                       className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#D8D0C2] text-[#141F2D] text-xs sm:text-sm placeholder-[#A09383] focus:outline-none focus:border-[#9A5328] focus:ring-1 focus:ring-[#9A5328] transition-all"
                     />
                   </div>
+
                   <div>
                     <label className="block text-xs font-mono text-[#8B481E] uppercase mb-1 font-semibold">
                       Work Email
@@ -260,11 +239,10 @@ export default function BookingModal({ isOpen, onClose, initialService }: Bookin
                 <div className="pt-2">
                   <button
                     type="submit"
-                    disabled={isSubmitting}
                     id="submit-booking-form-btn"
-                    className="w-full py-3.5 rounded-full bg-[#141F2D] hover:bg-[#1E2E42] text-[#FAF8F5] font-semibold text-sm transition-all flex items-center justify-center gap-2 shadow-card disabled:opacity-70"
+                    className="w-full py-3.5 rounded-full bg-[#141F2D] hover:bg-[#1E2E42] text-[#FAF8F5] font-semibold text-sm transition-all flex items-center justify-center gap-2 shadow-card"
                   >
-                    <span>{isSubmitting ? 'Submitting...' : 'Submit Inquiry & Get Roadmap →'}</span>
+                    <span>Submit Inquiry & Get Roadmap →</span>
                   </button>
                   <div className="text-center text-[11px] text-[#7A6E60] mt-2 font-mono">
                     Direct partner review · Instant automated lead routing · 4-hour response
