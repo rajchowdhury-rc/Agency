@@ -1,9 +1,11 @@
+"use client";
+
 import { useState, useEffect } from 'react';
 import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
 import { signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from 'firebase/auth';
-import { db, auth } from '../lib/firebase';
-import { Calendar, User, Mail, Phone, IndianRupee, LogOut, Loader2, FileSpreadsheet } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { db, auth } from '../../lib/firebase';
+import { Calendar, User, Mail, Phone, LogOut, Loader2, FileSpreadsheet } from 'lucide-react';
+import Link from 'next/link';
 
 interface Booking {
   id: string;
@@ -166,7 +168,7 @@ export default function AdminDashboard() {
             Sign in with Google
           </button>
           <div className="mt-6 pt-6 border-t border-[#E4DCD0]">
-            <Link to="/" className="text-[#9A5328] hover:underline text-sm font-medium">
+            <Link href="/" className="text-[#9A5328] hover:underline text-sm font-medium">
               &larr; Back to Website
             </Link>
           </div>
@@ -184,7 +186,7 @@ export default function AdminDashboard() {
             <p className="text-[#5E5245]">Welcome back, {user.email}</p>
           </div>
           <div className="flex items-center gap-4">
-            <Link to="/" className="text-[#9A5328] hover:underline text-sm font-medium">
+            <Link href="/" className="text-[#9A5328] hover:underline text-sm font-medium">
               View Website
             </Link>
             <button
