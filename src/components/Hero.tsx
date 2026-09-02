@@ -1,3 +1,4 @@
+"use client";
 import { type MouseEvent } from 'react';
 import { ArrowRight, ArrowDown, Globe, Share2, Workflow } from 'lucide-react';
 

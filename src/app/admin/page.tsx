@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
+import { collection, query, orderBy, onSnapshot, doc, getDoc, setDoc } from 'firebase/firestore';
 import { signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from 'firebase/auth';
 import { db, auth } from '../../lib/firebase';
 import { Calendar, User, Mail, Phone, LogOut, Loader2, FileSpreadsheet } from 'lucide-react';
@@ -23,6 +23,9 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [isExporting, setIsExporting] = useState(false);
+  const [webhookUrl, setWebhookUrl] = useState('');
+  const [isSavingWebhook, setIsSavingWebhook] = useState(false);
+  const [webhookMessage, setWebhookMessage] = useState('');
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -38,6 +41,14 @@ export default function AdminDashboard() {
     if (!user) return;
 
     setLoading(true);
+    
+    // Fetch webhook
+    getDoc(doc(db, 'settings', 'webhook')).then(docSnap => {
+      if (docSnap.exists()) {
+        setWebhookUrl(docSnap.data().url || '');
+      }
+    }).catch(console.error);
+
     const q = query(collection(db, 'bookings'), orderBy('createdAt', 'desc'));
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const results: Booking[] = [];
@@ -141,6 +152,21 @@ export default function AdminDashboard() {
     }
   };
 
+  const saveWebhook = async () => {
+    setIsSavingWebhook(true);
+    setWebhookMessage('');
+    try {
+      await setDoc(doc(db, 'settings', 'webhook'), { url: webhookUrl });
+      setWebhookMessage('Saved successfully!');
+      setTimeout(() => setWebhookMessage(''), 3000);
+    } catch (e) {
+      console.error(e);
+      setWebhookMessage('Failed to save.');
+    } finally {
+      setIsSavingWebhook(false);
+    }
+  };
+
   const handleLogout = async () => {
     await signOut(auth);
     setAccessToken(null);
@@ -190,14 +216,6 @@ export default function AdminDashboard() {
               View Website
             </Link>
             <button
-              onClick={exportToSheets}
-              disabled={isExporting || bookings.length === 0}
-              className="px-4 py-2 bg-[#107C41] text-white rounded-lg hover:bg-[#0C6334] transition-colors flex items-center gap-2 text-sm font-medium shadow-sm disabled:opacity-70 disabled:cursor-not-allowed"
-            >
-              {isExporting ? <Loader2 className="w-4 h-4 animate-spin" /> : <FileSpreadsheet className="w-4 h-4" />}
-              {isExporting ? 'Exporting...' : 'Export to Sheets'}
-            </button>
-            <button
               onClick={handleLogout}
               className="px-4 py-2 bg-white border border-[#E4DCD0] rounded-lg text-[#141F2D] hover:bg-[#F0EBE1] transition-colors flex items-center gap-2 text-sm font-medium shadow-sm"
             >
@@ -207,7 +225,43 @@ export default function AdminDashboard() {
           </div>
         </div>
 
+        <div className="bg-white rounded-2xl shadow-card border border-[#E4DCD0] p-6 mb-8">
+          <h2 className="text-lg font-bold text-[#141F2D] mb-2">Automated Google Sheets Export</h2>
+          <p className="text-sm text-[#5E5245] mb-4">Paste your Zapier, Make.com, or Google Apps Script Webhook URL here to automatically send new bookings to your spreadsheet without manually exporting.</p>
+          <div className="flex gap-4">
+            <input 
+              type="url" 
+              placeholder="https://hooks.zapier.com/..." 
+              value={webhookUrl}
+              onChange={(e) => setWebhookUrl(e.target.value)}
+              className="flex-1 px-4 py-2 bg-[#FBF9F5] border border-[#E4DCD0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#9A5328] text-sm"
+            />
+            <button 
+              onClick={saveWebhook}
+              disabled={isSavingWebhook}
+              className="px-4 py-2 bg-[#141F2D] text-white rounded-lg hover:bg-[#2A3B52] transition-colors text-sm font-medium shadow-sm disabled:opacity-70 flex items-center gap-2"
+            >
+              {isSavingWebhook && <Loader2 className="w-4 h-4 animate-spin" />}
+              Save Webhook
+            </button>
+          </div>
+          {webhookMessage && (
+            <p className="text-sm font-medium text-[#107C41] mt-2">{webhookMessage}</p>
+          )}
+        </div>
+
         <div className="bg-white rounded-2xl shadow-card border border-[#E4DCD0] overflow-hidden">
+          <div className="p-6 border-b border-[#E4DCD0] flex justify-between items-center">
+            <h2 className="text-lg font-bold text-[#141F2D]">Recent Leads</h2>
+            <button
+              onClick={exportToSheets}
+              disabled={isExporting || bookings.length === 0}
+              className="px-4 py-2 bg-[#107C41] text-white rounded-lg hover:bg-[#0C6334] transition-colors flex items-center gap-2 text-sm font-medium shadow-sm disabled:opacity-70 disabled:cursor-not-allowed"
+            >
+              {isExporting ? <Loader2 className="w-4 h-4 animate-spin" /> : <FileSpreadsheet className="w-4 h-4" />}
+              {isExporting ? 'Exporting...' : 'Export (Legacy)'}
+            </button>
+          </div>
           {bookings.length === 0 ? (
             <div className="p-12 text-center">
               <Calendar className="w-12 h-12 text-[#C8BCAB] mx-auto mb-4" />

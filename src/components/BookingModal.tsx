@@ -1,8 +1,9 @@
+"use client";
 import { useState, useEffect, type FormEvent } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { X, Sparkles, Check, ArrowRight, Calendar, MessageSquare, Mail, CheckCircle2 } from 'lucide-react';
 import { STUDIO_INFO } from '../data/studioData';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp, getDoc, doc } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 
 interface BookingModalProps {
@@ -73,6 +74,30 @@ export default function BookingModal({ isOpen, onClose, initialService }: Bookin
         serviceType,
         createdAt: serverTimestamp()
       });
+      
+      try {
+        const webhookDoc = await getDoc(doc(db, 'settings', 'webhook'));
+        if (webhookDoc.exists() && webhookDoc.data().url) {
+          await fetch(webhookDoc.data().url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            mode: 'no-cors',
+            body: JSON.stringify({
+              name,
+              email,
+              phone,
+              brief,
+              package: budget,
+              serviceType,
+              createdAt: new Date().toISOString()
+            })
+          });
+        }
+      } catch (webhookError) {
+        console.error('Webhook trigger failed:', webhookError);
+        // Silent failure for webhook
+      }
+      
       setSubmitted(true);
     } catch (error) {
       console.error('Error submitting booking:', error);

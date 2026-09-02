@@ -1,3 +1,4 @@
+"use client";
 import { PORTFOLIO_PROJECTS } from '../data/studioData';
 import { ArrowUpRight } from 'lucide-react';
 
