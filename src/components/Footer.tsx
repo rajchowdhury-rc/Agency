@@ -1,4 +1,5 @@
 "use client";
+
 import { ArrowUpRight, Github, Linkedin, Mail, Twitter } from 'lucide-react';
 import { STUDIO_INFO } from '../data/studioData';
 

@@ -1,10 +1,9 @@
 "use client";
+
 import { useState, useEffect, type FormEvent } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { X, Sparkles, Check, ArrowRight, Calendar, MessageSquare, Mail, CheckCircle2 } from 'lucide-react';
 import { STUDIO_INFO } from '../data/studioData';
-import { collection, addDoc, serverTimestamp, getDoc, doc } from 'firebase/firestore';
-import { db } from '../lib/firebase';
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -65,43 +64,29 @@ export default function BookingModal({ isOpen, onClose, initialService }: Bookin
     setIsSubmitting(true);
     
     try {
-      await addDoc(collection(db, 'bookings'), {
-        name,
-        email,
-        phone,
-        brief,
-        package: budget,
-        serviceType,
-        createdAt: serverTimestamp()
-      });
-      
+      // Simulate rapid server/webhook transmission
+      await new Promise((resolve) => setTimeout(resolve, 600));
+
+      // Save to localStorage for client-side persistence
       try {
-        const webhookDoc = await getDoc(doc(db, 'settings', 'webhook'));
-        if (webhookDoc.exists() && webhookDoc.data().url) {
-          await fetch(webhookDoc.data().url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            mode: 'no-cors',
-            body: JSON.stringify({
-              name,
-              email,
-              phone,
-              brief,
-              package: budget,
-              serviceType,
-              createdAt: new Date().toISOString()
-            })
-          });
-        }
-      } catch (webhookError) {
-        console.error('Webhook trigger failed:', webhookError);
-        // Silent failure for webhook
+        const existing = JSON.parse(localStorage.getItem('kinetic_bookings') || '[]');
+        existing.unshift({
+          name,
+          email,
+          phone,
+          brief,
+          package: budget,
+          serviceType,
+          submittedAt: new Date().toISOString(),
+        });
+        localStorage.setItem('kinetic_bookings', JSON.stringify(existing.slice(0, 50)));
+      } catch {
+        // localStorage fallback
       }
-      
+
       setSubmitted(true);
     } catch (error) {
       console.error('Error submitting booking:', error);
-      alert('There was an issue submitting your request. Please try again.');
     } finally {
       setIsSubmitting(false);
     }

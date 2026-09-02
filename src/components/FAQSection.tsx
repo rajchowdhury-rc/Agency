@@ -1,6 +1,7 @@
 "use client";
+
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { FAQS } from '../data/studioData';
 import { Plus, Minus } from 'lucide-react';
 

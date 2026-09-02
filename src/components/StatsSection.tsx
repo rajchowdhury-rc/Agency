@@ -1,4 +1,5 @@
 "use client";
+
 import { ArrowUpRight, ArrowRight, Sparkles } from 'lucide-react';
 
 export default function StatsSection() {

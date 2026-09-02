@@ -1,6 +1,12 @@
+import type { Metadata, Viewport } from "next";
 import "../index.css";
 
-export const metadata = {
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
+export const metadata: Metadata = {
   title: "Kinetic — Websites, Social Media Growth & Workflow Automation",
   description: "Bespoke websites, social media marketing, and smart workflow automations designed to launch, automate, and scale businesses.",
 };

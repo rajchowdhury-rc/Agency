@@ -1,5 +1,6 @@
 "use client";
-import { motion } from 'framer-motion';
+
+import { motion } from 'motion/react';
 import { PROCESS_STEPS } from '../data/studioData';
 import { Compass, Palette, Code2, Rocket, CheckCircle2 } from 'lucide-react';
 

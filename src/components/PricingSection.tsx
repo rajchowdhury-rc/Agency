@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from 'react';
 import { COMBO_PACKAGES, STANDALONE_SPRINTS } from '../data/studioData';
 import { Check, Sparkles, ArrowRight, ShieldCheck, Workflow, Share2, Globe, Rocket } from 'lucide-react';
