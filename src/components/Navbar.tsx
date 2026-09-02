@@ -73,7 +73,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
             className="flex items-center gap-2.5 group"
           >
             <div className="w-8 h-8 rounded-lg bg-[#141F2D] flex items-center justify-center text-[#FBF9F5] text-xs font-bold font-mono tracking-wider shadow-sm group-hover:bg-[#1E2D40] transition-colors">
-              K
+              T
             </div>
             <div className="flex flex-col">
               <span className="text-sm font-bold tracking-tight text-[#16202C] font-display leading-tight">

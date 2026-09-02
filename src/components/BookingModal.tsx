@@ -69,7 +69,7 @@ export default function BookingModal({ isOpen, onClose, initialService }: Bookin
 
       // Save to localStorage for client-side persistence
       try {
-        const existing = JSON.parse(localStorage.getItem('kinetic_bookings') || '[]');
+        const existing = JSON.parse(localStorage.getItem('trive_bookings') || '[]');
         existing.unshift({
           name,
           email,
@@ -79,7 +79,7 @@ export default function BookingModal({ isOpen, onClose, initialService }: Bookin
           serviceType,
           submittedAt: new Date().toISOString(),
         });
-        localStorage.setItem('kinetic_bookings', JSON.stringify(existing.slice(0, 50)));
+        localStorage.setItem('trive_bookings', JSON.stringify(existing.slice(0, 50)));
       } catch {
         // localStorage fallback
       }

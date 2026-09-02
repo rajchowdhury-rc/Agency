@@ -19,7 +19,7 @@ export default function Footer() {
           <div className="max-w-sm space-y-3">
             <div className="flex items-center gap-2.5">
               <div className="w-6 h-6 rounded bg-[#141F2D] flex items-center justify-center text-[#FAF8F5] text-xs font-bold font-display">
-                K
+                T
               </div>
               <span className="text-base font-bold text-[#141F2D] font-display tracking-tight">
                 {STUDIO_INFO.fullName}
@@ -121,6 +121,7 @@ export default function Footer() {
                 <li>
                   <a
                     href={`mailto:${STUDIO_INFO.email}`}
+                    aria-label="Send email to Trive Studio"
                     className="hover:text-[#9A5328] transition-colors flex items-center gap-1.5"
                   >
                     <Mail className="w-3.5 h-3.5 text-[#9A5328]" />
@@ -131,7 +132,8 @@ export default function Footer() {
                   <a
                     href="https://github.com"
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
+                    aria-label="Visit Trive on GitHub (opens in new tab)"
                     className="hover:text-[#9A5328] transition-colors flex items-center gap-1.5"
                   >
                     <Github className="w-3.5 h-3.5 text-[#9A5328]" />
@@ -143,7 +145,8 @@ export default function Footer() {
                   <a
                     href="https://linkedin.com"
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
+                    aria-label="Visit Trive on LinkedIn (opens in new tab)"
                     className="hover:text-[#9A5328] transition-colors flex items-center gap-1.5"
                   >
                     <Linkedin className="w-3.5 h-3.5 text-[#9A5328]" />
@@ -155,7 +158,8 @@ export default function Footer() {
                   <a
                     href="https://twitter.com"
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
+                    aria-label="Visit Trive on X Twitter (opens in new tab)"
                     className="hover:text-[#9A5328] transition-colors flex items-center gap-1.5"
                   >
                     <Twitter className="w-3.5 h-3.5 text-[#9A5328]" />

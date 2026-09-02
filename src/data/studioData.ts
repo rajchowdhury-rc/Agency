@@ -1,14 +1,14 @@
 import { ProcessStep, PricingPlan, ComboPackage, ServicePillar, FAQItem, Project } from '../types';
 
 export const STUDIO_INFO = {
-  name: 'Kinetic',
-  fullName: 'Kinetic Product & Growth Studio',
+  name: 'Trive',
+  fullName: 'Trive',
   tagline: 'Design. Build. Automate. Grow.',
   subline: 'From custom websites to end-to-end social media growth and smart workflow automations — we help businesses launch, automate, and scale.',
   heroEyebrow: 'WEBSITES · SOCIAL MEDIA GROWTH · WORKFLOW AUTOMATION',
   heroSupporting: 'We build high-converting websites, run consistent social media marketing, and wire custom workflow automations that capture leads and save hours every week.',
   status: '2 Client Slots Available This Month',
-  email: 'founders@kineticstudio.dev',
+  email: 'founders@trivestudio.dev',
   founders: [
     { name: 'Aarav Mehta', role: 'Design & Product Lead', experience: 'Ex-Lead Product Designer' },
     { name: 'Kabir Sen', role: 'Growth & Automation Architect', experience: 'Full-Stack & Systems Specialist' },
